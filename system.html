@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loyalty Rewards System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #pointsDisplay {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Loyalty Rewards Program</h1>
+    <div id="pointsDisplay">Points: 0</div>
+    <button id="earnPoints">Earn Points</button>
+    <button id="redeemPoints">Redeem Points</button>
+    <div id="rewardsContainer" style="text-align: center; margin-top: 20px;">
+            <h2>Available Rewards</h2>
+            <div id="rewardsList" style="display: flex; justify-content: space-between;">
+                <div class="reward" style="text-align: center; flex: 1;">
+                    <h3>Free Taxi Ride</h3>
+                    <p>Cost: 150 points</p>
+                    <button onclick="redeemReward('Free Taxi Ride', 150, 'Well done! You got a free ride to use before this year ends.')">Redeem</button>
+                </div>
+                <div class="reward" style="text-align: center; flex: 1;">
+                    <h3>10% Discount</h3>
+                    <p>Cost: 100 points</p>
+                    <button onclick="redeemReward('10% Discount', 100, 'Well done! You got 10% of discount to your next ride.')">Redeem</button>
+                </div>
+                <div class="reward" style="text-align: center; flex: 1;">
+                    <h3>Award of the year</h3>
+                    <p>Cost: 200 points</p>
+                    <button onclick="redeemReward('Award of the year', 200, 'You won an award of the year, please download it.')">Redeem</button>
+                </div>
+            </div>
+    </div>
+
+    <script>
+        let points = 0;
+        const pointsDisplay = document.getElementById('pointsDisplay');
+        const earnButton = document.getElementById('earnPoints');
+        const redeemButton = document.getElementById('redeemPoints');
+
+        function updatePointsDisplay() {
+            pointsDisplay.textContent = `Points: ${points}`;
+        }
+
+        function redeemReward(rewardName, cost, message) {
+            if (points >= cost) {
+                points -= cost;
+                updatePointsDisplay();
+                alert(message || `You redeemed ${cost} points for ${rewardName}!`);
+            } else {
+                alert(`You need at least ${cost} points to redeem ${rewardName}.`);
+            }
+        }
+
+        earnButton.addEventListener('click', () => {
+            points += 10;
+            updatePointsDisplay();
+            alert('You earned 10 points!');
+        });
+
+        redeemButton.addEventListener('click', () => {
+            if (points >= 50) {
+                points -= 50;
+                updatePointsDisplay();
+                alert('You redeemed 50 points for a reward!');
+            } else {
+                alert('You need at least 50 points to redeem a reward.');
+            }
+        });
+    </script>
+</body>
+</html>

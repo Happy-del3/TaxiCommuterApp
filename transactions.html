@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minibus Taxi Fare Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label, input, button {
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Minibus Taxi Fare Calculator</h1>
+    <h2>FROM KWAMHLANGA TO PRETORIA ---> R50.00</h2>
+    <form id="fareForm">
+        <label for="passengers">Number of Passengers:</label>
+        <input type="number" id="passengers" required min="1">
+        
+        <label for="fare">Fare per Passenger (R):</label>
+        <input type="number" id="fare" required min="0" step="0.01">
+        
+        <button type="submit">Calculate Total and Remaining Amount</button>
+        <input type="hidden" id="fuelCost" value="350">
+    </form>
+    
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('fareForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const passengers = parseInt(document.getElementById('passengers').value);
+            const fare = parseFloat(document.getElementById('fare').value);
+            
+            const totalAmount = passengers * fare;
+            
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <p>Total Passengers: ${passengers}</p>
+                <p>Fare per Passenger: R${fare.toFixed(2)}</p>
+                <p>Total Amount Collected: R${totalAmount.toFixed(2)}</p>
+                <p>Fuel Cost: R${parseFloat(document.getElementById('fuelCost').value).toFixed(2)}</p>
+                <p>Remaining Amount: R${(totalAmount - parseFloat(document.getElementById('fuelCost').value)).toFixed(2)}</p>
+                <hr style="border-top: 1px solid black; width: 100%;">
+            `;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Verification System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 10px;
+        }
+        input, select {
+            margin-bottom: 15px;
+            padding: 5px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Driver Verification System</h1>
+    <form id="verificationForm"> 
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="contactNumber">Contact Number:</label>
+        <input type="tel" id="contactNumber" required>
+
+        <label for="idNumber">ID Number:</label>
+        <input type="text" id="idNumber" required>
+
+        <label for="licenseNumber">Driver's License Number:</label>
+        <input type="text" id="licenseNumber" required>
+
+        <label for="expirationDate">License Expiration Date:</label>
+        <input type="date" id="expirationDate" required>
+
+        <label for="vehicleType">Vehicle Type:</label>
+        <select id="vehicleType" required>
+            <option value="">Select vehicle type</option>
+            <option value="car">Car</option>
+            <option value="truck">Truck</option>
+            <option value="motorcycle">Motorcycle</option>
+            <option value="minitaxi">MiniTaxi</option>
+            <option value="bus">Bus</option>
+        </select>
+
+        <button type="submit" onclick="displayDateTime()">Verify Driver</button>
+        <div id="dateTimeDisplay"></div>
+        <script>
+            function displayDateTime() {
+                const now = new Date();
+                const dateTimeString = now.toLocaleString();
+                document.getElementById('dateTimeDisplay').textContent = `Current Date and Time: ${dateTimeString}`;
+            }
+        </script>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('verificationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const licenseNumber = document.getElementById('licenseNumber').value;
+            const expirationDate = new Date(document.getElementById('expirationDate').value);
+            const vehicleType = document.getElementById('vehicleType').value;
+
+            const today = new Date();
+            const resultDiv = document.getElementById('result');
+
+            if (expirationDate < today) {
+                resultDiv.textContent = "Verification Failed: Driver's license has expired.";
+                resultDiv.style.color = "red";
+            } else {
+                resultDiv.textContent = `Verification Successful: ${name} is verified to drive a ${vehicleType}.`;
+                resultDiv.style.color = "green";
+            }
+        });
+    </script>
+</body>
+</html>
